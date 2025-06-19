@@ -1,0 +1,125 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Segoe UI', cursive;
+  background: linear-gradient(to right, #ffe6f0, #ffe9f2);
+  overflow: hidden;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  position: relative;
+}
+
+canvas#confettiCanvas {
+  position: fixed;
+  top: 0;
+  left: 0;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.card-container {
+  background: #fff;
+  border-radius: 20px;
+  padding: 30px 20px;
+  max-width: 500px;
+  text-align: center;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+  z-index: 1;
+  position: relative;
+}
+
+h1 {
+  color: #f21b77;
+  font-size: 2.5em;
+}
+
+h2 {
+  font-size: 1.5em;
+  color: #e60073;
+  margin-bottom: 20px;
+}
+
+.flip-card {
+  background: transparent;
+  width: 280px;
+  height: 150px;
+  perspective: 1000px;
+  margin: 0 auto 20px;
+  cursor: pointer;
+}
+
+.flip-card-inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  transition: transform 0.6s ease;
+  transform-style: preserve-3d;
+}
+
+.flip-card.flip .flip-card-inner,
+.flip-card-inner.flip {
+  transform: rotateY(180deg);
+}
+
+.flip-card-front,
+.flip-card-back {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  border-radius: 15px;
+  backface-visibility: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  font-size: 1.1em;
+  padding: 10px;
+}
+
+.flip-card-front {
+  background: linear-gradient(135deg, #f55bbf, #924eff);
+}
+
+.flip-card-back {
+  background: linear-gradient(135deg, #6e52ff, #ff6ec4);
+  transform: rotateY(180deg);
+}
+
+.gift-icon {
+  font-size: 2.5em;
+  margin-top: 10px;
+}
+
+.message {
+  color: #4c0070;
+  font-size: 1em;
+  padding: 0 10px;
+  transition: all 0.5s ease;
+}
+
+.message .together {
+  color: #ff007f;
+  font-weight: bold;
+  display: inline-block;
+  margin-top: 10px;
+}
+
+.hidden {
+  opacity: 0;
+  height: 0;
+  overflow: hidden;
+  transition: all 0.3s ease;
+}
+
+#birthdayMessage:not(.hidden) {
+  opacity: 1;
+  height: auto;
+}
