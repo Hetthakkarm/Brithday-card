@@ -4,7 +4,7 @@ function updateCountdown() {
       const gap = targetDate - now;
       if (gap <= 0) {
       // Countdown complete, redirect to birthday.html
-      window.location.href = "birthday.html";
+      window.location.href = "slide.html";
       return;
     }
 
