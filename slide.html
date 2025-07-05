@@ -66,12 +66,6 @@
       border-radius: 12px;
     }
 
-    .note-text {
-      margin-top: 12px;
-      font-size: 0.95rem;
-      color: #333;
-    }
-
     .tape {
       width: 60px;
       height: 20px;
@@ -101,7 +95,6 @@
       50% { transform: scale(1.08); }
     }
 
-    /* Heart Animation */
     .heart-container {
       position: fixed;
       bottom: 0;
@@ -122,14 +115,25 @@
     }
 
     @keyframes floatUp {
-      0% {
-        transform: translateY(0) scale(1);
-        opacity: 1;
-      }
-      100% {
-        transform: translateY(-120vh) scale(1.4);
-        opacity: 0;
-      }
+      0% { transform: translateY(0) scale(1); opacity: 1; }
+      100% { transform: translateY(-120vh) scale(1.4); opacity: 0; }
+    }
+
+    #startOverlay {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: #1e1e2f;
+      color: white;
+      font-size: 24px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 9999;
+      cursor: pointer;
+      text-align: center;
+      padding: 20px;
     }
 
     @media (max-width: 768px) {
@@ -141,12 +145,23 @@
   </style>
 </head>
 <body>
+  <!-- Music -->
+<audio id="bgMusic" loop autoplay>
+  <source src="assests/lofi.mp3" type="audio/mpeg">
+  Your browser does not support the audio element.
+</audio>
+
+
+  <!-- Tap to Start -->
+  <div id="startOverlay">🎵 Tap anywhere to start the surprise!</div>
+
+  <!-- Effects -->
   <div class="stardust" id="stardust"></div>
   <div class="heart-container" id="heartContainer"></div>
 
+  <!-- Slides -->
   <div class="viewport">
     <div class="track" id="track">
-      <!-- Slide 1–7 -->
       <div class="slide" style="top: 0; left: 0vw;"><div class="note"><div class="tape"></div><img src="assests/images/image1.JPG"></div></div>
       <div class="slide" style="top: 0; left: 100vw;"><div class="note"><div class="tape"></div><img src="assests/images/image2.JPG"></div></div>
       <div class="slide" style="top: 0; left: 200vw;"><div class="note"><div class="tape"></div><img src="assests/images/image3.jpg"></div></div>
@@ -154,8 +169,6 @@
       <div class="slide" style="top: 200vh; left: 200vw;"><div class="note"><div class="tape"></div><img src="assests/images/image5.jpg"></div></div>
       <div class="slide" style="top: 200vh; left: 100vw;"><div class="note"><div class="tape"></div><img src="assests/images/image6.JPG"></div></div>
       <div class="slide" style="top: 200vh; left: 0vw;"><div class="note"><div class="tape"></div><img src="assests/images/image7.jpg"></div></div>
-
-      <!-- Slide 8 (Only Button) -->
       <div class="slide" style="top: 100vh; left: 0vw;">
         <button class="send-hearts-btn" id="sendHeartsBtn">💖 Send Hearts 💖</button>
       </div>
@@ -163,7 +176,7 @@
   </div>
 
   <script>
-    // ⭐ Star background
+    // Stars
     const starContainer = document.getElementById('stardust');
     for (let i = 0; i < 60; i++) {
       const star = document.createElement('div');
@@ -178,25 +191,34 @@
       starContainer.appendChild(star);
     }
 
-    // 🎞 Slide movement
+    const track = document.getElementById('track');
+    const bgMusic = document.getElementById('bgMusic');
+    const heartContainer = document.getElementById('heartContainer');
     const positions = [
       [0, 0], [1, 0], [2, 0],
       [2, 1], [2, 2], [1, 2],
-      [0, 2], [0, 1] // slide 8 button
+      [0, 2], [0, 1]
     ];
-
-    const track = document.getElementById('track');
     let index = 0;
-    const moveSlides = () => {
-      const [x, y] = positions[index];
-      track.style.transform = `translate(${-x * 100}vw, ${-y * 100}vh)`;
-      index++;
-      if (index === positions.length) clearInterval(slideInterval);
-    };
-    const slideInterval = setInterval(moveSlides, 4000);
+    let slideInterval;
 
-    // 💖 Hearts animation
-    const heartContainer = document.getElementById('heartContainer');
+    document.getElementById('startOverlay').addEventListener('click', () => {
+      // Start music
+      bgMusic.play().catch(err => console.log('Autoplay blocked:', err));
+      bgMusic.volume = 0.3;
+
+      // Start slideshow
+      slideInterval = setInterval(() => {
+        const [x, y] = positions[index];
+        track.style.transform = `translate(${-x * 100}vw, ${-y * 100}vh)`;
+        index++;
+        if (index === positions.length) clearInterval(slideInterval);
+      }, 4000);
+
+      // Hide overlay
+      document.getElementById('startOverlay').style.display = 'none';
+    });
+
     document.getElementById('sendHeartsBtn').addEventListener('click', () => {
       for (let i = 0; i < 200; i++) {
         const heart = document.createElement('span');
@@ -206,10 +228,12 @@
         heart.style.animationDelay = `${Math.random() * 2}s`;
         heartContainer.appendChild(heart);
       }
-
-      // Redirect after 6 seconds
       setTimeout(() => {
+<<<<<<< HEAD
         window.location.href = "birthday.html"; // ← Change if needed
+=======
+        window.location.href = "brithday.html";
+>>>>>>> c1416d8 (Initial commit)
       }, 6000);
     });
   </script>
