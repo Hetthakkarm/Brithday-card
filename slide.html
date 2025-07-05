@@ -124,7 +124,7 @@
       top: 0; left: 0;
       width: 100vw;
       height: 100vh;
-      background: #1e1e2f;
+      background: rgba(0,0,0,0.85);
       color: white;
       font-size: 24px;
       display: flex;
@@ -146,13 +146,13 @@
 </head>
 <body>
   <!-- Music -->
-<audio id="bgMusic" loop autoplay>
-  <source src="assests/lofi.mp3" type="audio/mpeg">
-  Your browser does not support the audio element.
-</audio>
-
+  <audio id="bgMusic" loop>
+    <source src="assests/lofi.mp3" type="audio/mpeg">
+    Your browser does not support the audio element.
+  </audio>
 
   <!-- Tap to Start -->
+  <div id="startOverlay">🎵 Tap anywhere to start the magic!</div>
 
   <!-- Effects -->
   <div class="stardust" id="stardust"></div>
@@ -175,7 +175,6 @@
   </div>
 
   <script>
-    // Stars
     const starContainer = document.getElementById('stardust');
     for (let i = 0; i < 60; i++) {
       const star = document.createElement('div');
@@ -201,12 +200,11 @@
     let index = 0;
     let slideInterval;
 
+    // Tap to start
     document.getElementById('startOverlay').addEventListener('click', () => {
-      // Start music
-      bgMusic.play().catch(err => console.log('Autoplay blocked:', err));
+      bgMusic.play().catch(err => console.log("Autoplay blocked:", err));
       bgMusic.volume = 0.3;
 
-      // Start slideshow
       slideInterval = setInterval(() => {
         const [x, y] = positions[index];
         track.style.transform = `translate(${-x * 100}vw, ${-y * 100}vh)`;
@@ -214,7 +212,6 @@
         if (index === positions.length) clearInterval(slideInterval);
       }, 4000);
 
-      // Hide overlay
       document.getElementById('startOverlay').style.display = 'none';
     });
 
@@ -228,9 +225,7 @@
         heartContainer.appendChild(heart);
       }
       setTimeout(() => {
-
-        window.location.href = "birthday.html"; // ← Change if needed
-
+        window.location.href = "birthday.html";
       }, 6000);
     });
   </script>
