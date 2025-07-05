@@ -1,4 +1,4 @@
-const targetDate = new Date("2023-07-06T00:00:00").getTime();
+const targetDate = new Date("2025-07-06T00:00:00").getTime();
 function updateCountdown() {
       const now = new Date().getTime();
       const gap = targetDate - now;
